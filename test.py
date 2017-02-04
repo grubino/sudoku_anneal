@@ -18,11 +18,11 @@ if __name__ == '__main__':
     with open('puzzle.json', 'r') as f:
         hints = json.load(f)
     solver = SudokuSolve(hints)
-    solver.copy_strategy = "slice"
+    solver.copy_strategy = "method"
     solver.steps = 10000
     solver.Tmax = 0.5
-    solver.Tmin = 0.1
-    solver.updates = 100
+    solver.Tmin = 0.4
+    solver.updates = 10
     state, e = solver.anneal()
 
     print('[\n[{}]\n]'.format('],\n['.join([','.join([str(el) for el in row]) for row in state])))
