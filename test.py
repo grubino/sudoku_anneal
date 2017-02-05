@@ -1,5 +1,7 @@
 import json
 
+import sys
+
 from solve import *
 
 # solved = [
@@ -15,13 +17,15 @@ from solve import *
 # ]
 
 if __name__ == '__main__':
-    with open('puzzle.json', 'r') as f:
+    with open(sys.argv[1], 'r') as f:
         hints = json.load(f)
     solver = SudokuSolve(hints)
-    solver.copy_strategy = "method"
-    solver.steps = 10000
-    solver.Tmax = 0.5
-    solver.Tmin = 0.4
+    print(solver.energy())
+    solver.copy_strategy = "slice"
+    params = solver.auto(100, 10000)
+    solver.Tmin = params['tmin']
+    solver.Tmax = params['tmax']
+    solver.steps = params['steps']
     solver.updates = 10
     state, e = solver.anneal()
 
